@@ -1,0 +1,41 @@
+<?php if (empty($o)) die('Can\'t execute.'); ?> 
+	<?php /*var_dump($model);*/ ?>
+	
+<?php if ( ($btns = $o->extra('buttons')) && count($btns['pages']) > 1):?>
+	<div class="com_navigation">
+	
+	
+		<?php /* if(isset($btns['prev']) && false !== $btns['prev']):?>
+			<a href='<?php echo $o->currentDir() . (($btns['prev']) ? $btns['prev'] : '') ; ?>' id="previous_page">
+				<?php echo $o->translate('prev');?>
+			</a>&nbsp;
+		<?php endif;*/?>
+                <?php include('prevButton.phtml'); ?>
+		
+		<?php for($i=0; !empty($btns['pages']) && count($btns['pages']) > 1 && $i<count($btns['pages']); $i++):?>
+			<?php if(isset($btns['current']) && $btns['pages'][$i] == $btns['current']): ?>
+			
+				<a href='<?php echo $o->currentDir() . (($btns['pages'][$i]) ? $btns['pages'][$i] : '') ; ?>' title="<?php echo  ($i + 1); ?>" class='nav_button active_page'>
+					<?php echo  ($i + 1); ?>
+				</a> &nbsp;
+			
+			<?php else: ?>
+			
+				<a href='<?php echo $o->currentDir() . (($btns['pages'][$i]) ? $btns['pages'][$i] : '') ; ?>' title="<?php echo  ($i + 1); ?>" class='nav_button'>
+					<?php echo  ($i + 1); ?>
+				</a> &nbsp;
+			
+			<?php endif;?>
+		<?php endfor; ?>
+		
+		<?php /* if(isset($btns['next']) && false !== $btns['next']):?>
+			<a href='<?php echo $o->currentDir() . $btns['next']; ?>' id="next_page">
+			
+			<?php echo $o->translate('next');?>
+			
+			</a>&nbsp;
+		<?php endif;*/?>
+                <?php include('nextButton.phtml'); ?>              
+	</div>
+<?php endif;?>	
+	

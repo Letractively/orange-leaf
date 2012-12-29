@@ -1,0 +1,14 @@
+AddDefaultCharset UTF-8
+
+Options -Indexes
+
+AddType image/x-icon .ico 
+
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+#RewriteBase /
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . index.php [L]
+</IfModule>

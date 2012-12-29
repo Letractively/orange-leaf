@@ -1,0 +1,27 @@
+<?php if (empty($o)) die('Can\'t execute.'); ?> 
+
+<?php if ( count($o->extra('otherLangs')) ):?>
+    <div class="com_otherLangs">
+        <ul>
+        <?php foreach($o->extra('otherLangs') as $lang):?>
+        <li>
+            <?php if($lang != $o->lang()):?>
+            
+            <a href="<?php echo $o->homeUrl() . 
+                        $o->descr('dir') .
+                        $lang . '/' .
+                        $o->extra('chapter') .
+                        ($o->extra('chapter') ? '/':'') . 
+                        $o->safeGet($o->extra('image'),'filename') 
+                    ?>">
+                <?php echo $lang;?>
+            </a>
+            <?php else: ?>
+                 <?php echo $lang;?>
+            <?php endif;?>
+        </li>
+        <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif; ?>
+

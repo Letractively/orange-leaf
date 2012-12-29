@@ -1,0 +1,44 @@
+<?php if (empty($o)) die('Can\'t execute.'); ?> 
+
+        <?php if($o->hasElements()):?>
+            <div id="com_id_elements" class="com_elements">
+		<?php while( ($book = $o->nextElement()) ): ?>
+			<div class="com_el">
+				<?php if (isset($book['dir'])):?>
+					<h3>
+						<a href='<?php echo $o->currentDir() . $book['dir']?>' >
+							<?php echo $book['title'] ?>
+						</a>
+					</h3>
+					
+					<?php if (!empty($book['cover'])):?>
+						<a href='<?php echo $o->currentDir() . $book['dir']?>' >
+							<img src='<?php echo $o->thumb($book['cover']);?>' />
+						</a>
+					<?php endif;?>
+				<?php endif; ?>
+				
+				<?php if ( !empty($book['path']) && !empty($book['filename']) ):?>
+					<a href='<?php echo $o->currentDir() . $book['filename']?>' >							
+							<img src='<?php echo $o->thumb($book['path']);?>' />
+					</a>
+				<?php endif; ?>
+				
+				<?php if (!empty($book['languages'])):?>
+					<ul>
+					<?php for($lang = 0; $lang < count($book['languages']); $lang++): ?>
+						<li><a href='<?php echo $book['dir'] . $book['languages'][$lang] . '/' ?>'><?php echo $book['languages'][$lang]?></a></li>
+					<?php endfor;?>
+					</ul>
+				<?php endif; ?>
+                                <?php if ( $o->safeGet($book,'isNew') ):?>
+                                    <p>New</p>
+                                <?php endif;?>
+			</div>
+		<?php endwhile; ?>
+                <hr class="cleaner" />
+            </div>
+        <?php endif; ?>
+	
+        <?php require('paging.phtml');?>
+            

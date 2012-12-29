@@ -1,0 +1,65 @@
+<?php if (empty($o)) die('Can\'t execute.'); ?>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>
+		<?php echo $o->title() .
+                        ( ($o->extra('chapter')) ? ' :: ' : '' ) .
+                        $o->extra('chapter') .
+                        ( ($o->safeGet($o->extra('image'),'filename')) ? ' / ' : '' ) .
+                        $o->safeGet($o->extra('image'),'filename')
+                        ; ?>
+	</title>
+        <base href='<?php echo $o->domain() . $o->homeUrl(); ?>' />
+        
+        <link rel="stylesheet" href="s.css" type="text/css" />
+        <script type="text/javascript" src="s.js"></script>
+	
+        <?php if ( $o->descr('customCss') ):?>
+        <link rel="stylesheet" href="<?php echo $o->descr('customCss') ?>" type="text/css" />
+        <?php endif; ?>
+        
+        <?php if ( $o->descr('customFavIcon') ) : ?>
+        <link rel="shortcut icon" href="<?php echo $o->domain() . $o->homeUrl() . $o->descr('customFavIcon') ?>" />
+        <?php endif; ?>
+            
+        <?php if ( $o->descr('customBg') ):?>
+            <style type="text/css">
+            <!--    
+                body {
+                    background-image: url('<?php echo $o->descr('customBg') ?>') !important ;
+                }
+            -->    
+            </style> 
+        <?php endif; ?>
+            
+        <?php if ( USE_AJAX_CHAPTER && $o->extra('ajax')  /* && ($btns = $o->extra('buttons')) && count($btns['pages']) > 1  */): ?>
+            <script type="text/javascript">
+            <!--
+                function getPagingAttributesImpl()
+                {
+                    var arr = Array();
+                    arr['link_id']          = 'a.nav_button';
+                    arr['placeholder_id']   = '#com_id_elements';                    
+                    arr['hash_variable']    = 'p';
+                    arr['next_id']          = '#next_page';
+                    arr['prev_id']          = '#previous_page';
+                    arr['active_name']      = 'active_page';  //!not selector!
+                    return arr;
+                }
+            -->
+            </script>
+        <?php endif; ?>
+            <?php /*<style type="text/css">
+	<!--
+	-->
+	</style> 
+        
+        <script type="text/javascript">
+            <!--
+            
+                -->
+        </script>*/ ?>
+            
+    <!--VK ID:'<?php echo 'cv_' . rtrim($o->descr('dir'),'/') . '_' . $o->lang() . '_' . $o->extra('chapter') ?>'-->
+    <!--FB ID:'<?php echo $o->domain() . $o->currentDir();  ?>'-->
+</head>

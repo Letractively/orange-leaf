@@ -1,0 +1,12 @@
+<?php if (empty($o)) die('Can\'t execute.'); ?> 
+               <?php if ($o->descr('dir')):?>
+               
+			<a href="<?php echo $o->descr('dir')?>" id="up_page">
+				<h2><?php echo $o->title(); ?></h2>
+			</a>
+		
+		<?php else:?>
+			
+			<h2><?php echo $o->title(); ?></h2>
+		
+		<?php endif;?>

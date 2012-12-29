@@ -1,0 +1,22 @@
+<?php if (empty($o)) die('Can\'t execute.'); ?> 
+
+<?php if ( ($btns = $o->extra('buttons')) && count($btns['pages']) > 1 && isset($btns['next'])):?>
+
+    <?php if ( !USE_AJAX_CHAPTER || !$o->extra('ajax') ):?>
+
+        <?php if(false !== $btns['next']):?>
+            <a href='<?php echo $o->currentDir() . $btns['next'] ; ?>' id="next_page">
+                <?php echo $o->translate('next');?>
+            </a>&nbsp;
+        <?php endif;?>
+
+    <?php else: ?>
+        
+        <a id="next_page" href='<?php echo $o->currentDir() . ( ($btns['next']) ? $btns['next'] : '')  ?>' <?php if (empty($btns['next'])) echo ' style="display:none;"' ?>>
+            <?php echo $o->translate('next');?>
+	</a>
+            
+    <?php endif; ?>
+
+<?php endif; ?> 
+

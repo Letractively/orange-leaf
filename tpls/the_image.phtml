@@ -1,0 +1,40 @@
+<?php if (empty($o)) die('Can\'t execute.'); ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<?php require('chunks/html_head.phtml'); ?>
+<body>
+    <?php $width = $o->safeGet($o->extra('image'),'size','width'); 
+          if ($width < PAGE_MAX_WIDTH) $width = false; 
+    ?>
+    <div class ="com_wrapper"  <?php if ($width) echo 'style="width:' .$width. 'px;"' ?>>
+	<?php require('chunks/header.phtml');?>
+        <?php require('chunks/comicLink.phtml');?>
+        <?php require('chunks/otherLangs.phtml');?>
+	
+	<div class="com_body">
+		
+            <div class="com_image_props">
+		<?php if ($o->descr('dir')):?>
+			
+
+			<a href="<?php echo $o->descr('dir') . 
+                                            $o->lang() . '/' . 
+                                            $o->extra('chapter') . '/';?>">
+				<h3><?php echo $o->translate('chapter'); ?> <?php echo $o->extra('chapter'); ?></h3>
+			</a>
+		
+		
+		<?php endif;?>
+		
+		
+		<p><?php echo ($o->safeGet($o->extra('page'),'number')+1); ?> / <?php echo $o->safeGet($o->extra('page'),'total'); ?></p>
+            </div>
+		<?php require('chunks/image.phtml'); ?>
+		
+		<?php require('chunks/paging.phtml');?>
+	
+	</div>
+    </div>
+</body>
+</html>

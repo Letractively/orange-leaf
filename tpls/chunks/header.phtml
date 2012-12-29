@@ -1,0 +1,14 @@
+<?php if (empty($o)) die('Can\'t execute.'); ?>
+
+<?php if (IS_DEBUGGING):?>
+    <!--
+        <?php var_dump($o);?>
+    -->
+<?php endif; ?>
+
+    
+	<div class="com_header">
+            <h1><a href="<?php echo $o->homeUrl(); ?>" id="home_page">Überviewr</a></h1>
+            <!--<h1><?php echo $o->title(); ?></h1>-->
+	</div> 
+
