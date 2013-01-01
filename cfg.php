@@ -37,6 +37,9 @@ define('INDEX_TEMPLATE',	'tpls/index.phtml');	//Path to the index template file
 define('CHAPTERS_TEMPLATE',	'tpls/chapters.phtml');	//Path to the chapters template file
 define('IMAGE_PAGE_TEMPLATE',   'tpls/the_image.phtml');//Path to the images template file
 define('TUMBNAIL_SCRIPT',	'thumb/phpThumb.php');	//Path to thumbnailzator
+define('ERROR_404_PAGE',	'tpls/404.html');	//Path to error 404 page
+define('ERROR_403_PAGE',	'tpls/403.html');	//Path to error 403 page
+define('ERROR_500_PAGE',	'tpls/500.html');	//Path to error 500 page
 
 /* Localization */
 function g_dictionary()
