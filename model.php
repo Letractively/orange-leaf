@@ -166,6 +166,63 @@ class The_Image_Model extends Images_Model
     }
 }
 
+class The_Num_Image_Model extends The_Image_Model 
+{
+    private $id = null;
+    public function __construct($domain, $arr) {
+        $this->id = intval(array_pop($arr));
+        $this->resolver = new The_Image_Model_Resolver($domain, $arr);
+        $filename = $this->resolver->indexToName($this->id);
+        if (null === $filename) 
+            throw new Error404('Image num not found.');
+        
+        parent::__construct($domain, $filename, $arr);
+    }
+    
+     protected function serializeToArrayImpl() {
+        $arr = parent::serializeToArrayImpl();
+        $arr['extra']['image']['num'] = $this->id;
+        return $arr;
+     }
+}
+
+class The_Image_Model_Resolver extends DirBased_Model  // OOP deadlock: in The_Num_Image_Model I need to call getCurrentDir before parent constructor is called
+{
+    private $pics = null; 
+    protected function serializeToArrayImpl() { throw Error500('The_Image_Model_Resolver is an utility Model'); }
+    
+    private function populateList() 
+    {
+        if (null === $this->pics) {
+            $this->pics = new FileList('Image_Description',  $this->getCurrentDir() );
+        }
+    }
+    
+    public function indexToName($index) {
+        $this->populateList();
+        $objs = $this->pics->getPageData();
+        if (!isset($objs[$index])) //element not found
+            return null;
+        $obj = $objs[$index];
+        return $obj->filename;
+    }
+    
+    public function nameToIndex($name) {
+        $this->populateList();
+        $index = null;
+        foreach($this->pics->getPageData() as $obj) {
+            if ($obj->filename == $name) 
+                break;
+            $index++;
+        }  
+        return $index;
+    }
+    
+    public function __construct($domain, $arr) {
+        parent::__construct($domain, '', $arr);
+    }
+}
+
 class About_Model extends Node_Model 
 {
     protected function linksToOtherLangs($langs) {

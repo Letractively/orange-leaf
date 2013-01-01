@@ -73,52 +73,60 @@ class Comic_Controller
 		
 		return $url_parts;
 	}
+        
+        private function onlyNumericOffset() 
+        {
+            if ( 0 == intval($this->req->file) && !!$this->req->file)
+                throw new Error404('Wrong offset');
+        }
 	
 	private function chooseModelAndView() 
 	{
 		$url = $this->explodeDir();
 		
-		
-		if (0 == count($url) /*&& '' == $this->req->file*/) {
-			if ( 0 == intval($this->req->file) && !!$this->req->file)
-				throw new Error404('Wrong offset');
+		switch ( count($url) ) {
+                    case 0:
+                        $this->onlyNumericOffset();
 			$this->model = new Index_Model($this->req->domain, $this->req->file);
 			$this->view = new Index_View($this->req->dir);
-			return;
-		}
-		
-		if (1 == count($url)) {
-			if ( 0 == intval($this->req->file) && !!$this->req->file)
-				throw new Error404('Wrong offset');
+                        break;
+                        
+                    case 1:
+                        $this->onlyNumericOffset();
 			$this->model = new Book_Model($this->req->domain, $url);
-			$this->view = null;
-			return;
-		}
-		
-		if (2 == count($url)) {
-			if ( 0 == intval($this->req->file) && !!$this->req->file)
-				throw new Error404('Wrong offset');
+                        break;
+                        
+                    case 2:
+                        $this->onlyNumericOffset();
 			$this->model = new Chapters_Model($this->req->domain, $this->req->file, $url);
 			$this->view = new Chapters_View($this->req->dir);
-			return;
-		}
-		
-		if (3 == count($url)) {
-			if ($this->req->file === strval(intval($this->req->file)) 
+                        break;
+                        
+                    case 3:
+                        if ($this->req->file === strval(intval($this->req->file)) //if number
 				|| !(0 == intval($this->req->file) && !!$this->req->file) ) 
 			{
-				$this->model = new Images_Model($this->req->domain, $this->req->file, $url);
-				$this->view = new Chapters_View($this->req->dir);
-			} else {
-				$this->model = new The_Image_Model($this->req->domain, $this->req->file, $url);
-				$this->view = new Image_View($this->req->dir);
-			}
-			return;
-		}
-		
-		//return new Story_Model($this->req, $url);
-		
-		throw new Error404('Model not found.');
+                            $this->model = new Images_Model($this->req->domain, $this->req->file, $url);
+                            $this->view = new Chapters_View($this->req->dir);
+			} else if (USE_ORIGINAL_NAMES) {
+                            $this->model = new The_Image_Model($this->req->domain, $this->req->file, $url);
+                            $this->view = new Image_View($this->req->dir);
+			} else {       
+                            throw new Error404('Original names are turned off.');
+                        }
+                        break;
+                        
+                    case 4:
+                        if (USE_ORIGINAL_NAMES) {
+                          throw new Error404('Original names are turned on. Path too long.');  
+                        }
+                        $this->model = new The_Num_Image_Model($this->req->domain, $url);
+                        $this->view = new Image_View($this->req->dir);
+                        break;
+                    
+                    default:
+                        throw new Error404('Model not found.');
+                }
 	}
 	
 	public function __construct()

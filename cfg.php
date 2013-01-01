@@ -5,6 +5,7 @@
 define('IS_DEBUGGING',          true);                  //Display errors
 define('USE_CACHE',		false);                 //Are we caching output?
 define('ADMIN_EMAIL',		'mail@ilna.ru');        //Admin's e-mail
+define('USE_ORIGINAL_NAMES',    false);                 //use original folder and file names in url, e.g. http://ilna.ru/com/orange_life/en/00/ol_00_06.jpg -> http://ilna.ru/com/orange_life/en/00/06/
 
 /* Filenames. */                
 define('SUBDIR',                'com');                 //Subdir, where the reader resides
