@@ -204,22 +204,24 @@ class HTMLProvider extends DataProvider
 abstract class Comic_View
 {
     private $html = null;
+    private $link = null;
     private $current_url = '';
 
-    abstract protected function buildHTMLImpl($data);
+    abstract protected function buildHTMLImpl($data, $link);
 
     private function buildHTML($site_tree = array())
     {
         $data = new HTMLProvider($this->current_url, $site_tree); 
         ob_start();
-        $this->buildHTMLImpl($data);
+        $this->buildHTMLImpl($data, $this->link);
         $this->html = ob_get_clean();
 
     }
 
-    function __construct($current_url)
+    function __construct($link)
     {
-        $this->current_url = $current_url;
+        $this->link = $link;
+        $this->current_url = $link->getCurrentDir();
     }
 
     public function cache($path, $site_arr)

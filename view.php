@@ -14,9 +14,10 @@ require_once('view/helpers.php');
  
 class Image_View extends Comic_View
 {
-    protected function buildHTMLImpl($data)
+    protected function buildHTMLImpl($data, $link)
     {	
         $o = &$data;
+        $l = &$link;
         $buttons = getImagePagingButtons($o);
         $page = array( 
             'number' => $buttons['current_num'],
@@ -31,9 +32,10 @@ class Image_View extends Comic_View
  
 class Chapters_View extends Comic_View
 {
-    protected function buildHTMLImpl($data)
+    protected function buildHTMLImpl($data, $link)
     {	
         $o = &$data;
+        $l = &$link;
         $o->addExtra('buttons', getPagingButtons($o->stat()));
         if (USE_AJAX_CHAPTER) $o->addExtra('ajax', true);
         
@@ -44,9 +46,10 @@ class Chapters_View extends Comic_View
  
 class Index_View extends Comic_View
 {
-    protected function buildHTMLImpl(/*HTMLProvider*/ $data)
+    protected function buildHTMLImpl(/*HTMLProvider*/ $data, /* Link */ $link)
     {	
         $o = &$data;
+        $l = &$link;
         $o->addExtra('buttons', getPagingButtons($o->stat()));
         
         include INDEX_TEMPLATE;

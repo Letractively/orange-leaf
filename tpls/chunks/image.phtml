@@ -3,7 +3,7 @@
 <?php if ( ($image = $o->extra('image')) ): ?>
     <div class="com_image">	
         <?php if( ($btn = $o->extra('buttons') ) && false !== $btn['next']):?>
-            <a href='<?php echo $o->currentDir() . $btn['next']; ?>'>
+            <a href='<?php echo $l->href($btn['next']) ?>'>
                 <img src='<?php echo $o->homeUrl() . $image['path']?>' \>
             </a>
         <?php else:?>

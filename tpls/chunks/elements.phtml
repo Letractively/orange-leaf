@@ -19,7 +19,7 @@
 				<?php endif; ?>
 				
 				<?php if ( !empty($book['path']) && !empty($book['filename']) ):?>
-					<a href='<?php echo $o->currentDir() . $book['filename']?>' >							
+					<a href='<?php echo $l->href($book); ?>' >							
 							<img src='<?php echo $o->thumb($book['path']);?>' />
 					</a>
 				<?php endif; ?>

@@ -15,13 +15,13 @@
 		<?php for($i=0; !empty($btns['pages']) && count($btns['pages']) > 1 && $i<count($btns['pages']); $i++):?>
 			<?php if(isset($btns['current']) && $btns['pages'][$i] == $btns['current']): ?>
 			
-				<a href='<?php echo $o->currentDir() . (($btns['pages'][$i]) ? $btns['pages'][$i] : '') ; ?>' title="<?php echo  ($i + 1); ?>" class='nav_button active_page'>
+				<a href='<?php echo (($btns['pages'][$i]) ? $l->href($btns['pages'][$i]) : $l->getCurrentDir()) ; ?>' title="<?php echo  ($i + 1); ?>" class='nav_button active_page'>
 					<?php echo  ($i + 1); ?>
 				</a> &nbsp;
 			
 			<?php else: ?>
 			
-				<a href='<?php echo $o->currentDir() . (($btns['pages'][$i]) ? $btns['pages'][$i] : '') ; ?>' title="<?php echo  ($i + 1); ?>" class='nav_button'>
+				<a href='<?php echo (($btns['pages'][$i]) ? $l->href($btns['pages'][$i]) : $l->getCurrentDir()) ; ?>' title="<?php echo  ($i + 1); ?>" class='nav_button'>
 					<?php echo  ($i + 1); ?>
 				</a> &nbsp;
 			

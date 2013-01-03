@@ -12,7 +12,8 @@
                         $lang . '/' .
                         $o->extra('chapter') .
                         ($o->extra('chapter') ? '/':'') . 
-                        $o->safeGet($o->extra('image'),'filename') 
+                        $o->safeGet($o->extra('image'), USE_ORIGINAL_NAMES ? 'filename' : 'num') .
+                        (USE_ORIGINAL_NAMES ? '' : '/')//TODO: move to LinkBuilder
                     ?>">
                 <?php echo $lang;?>
             </a>

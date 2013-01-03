@@ -1,6 +1,6 @@
 <?php
 
-function getPagingButtons($stat)
+function getPagingButtons($stat) /* rewrite this func */
 {
 	$prev_offset = false;
 	if ($stat['offset'] > 0) {
@@ -8,17 +8,19 @@ function getPagingButtons($stat)
 		if ($prev_offset < 0) {
 			$prev_offset = 0;
 		}
+                $prev_offset = array('id'=>$prev_offset, 'page_id'=>$prev_offset);
 	}
 		
 	$next_offset = false;
 	if ( ($stat['offset'] + $stat['elements_on_page']) < $stat['total_elements'] ) {
 		$next_offset =  $stat['offset'] + $stat['elements_on_page'];
+                $next_offset = array('id'=>$next_offset, 'page_id'=>$next_offset);
 	}
 	
 	$pages = array();
 	$delta = ($stat['elements_on_page']) ? $stat['elements_on_page'] : 1; 
 	for ($i = 0; $i < $stat['total_elements']; $i += $delta) {		
-		$pages[]=$i;
+		$pages[]=array('id'=>$i, 'page_id'=>$i);
 	}
 	
 	return array(
@@ -45,7 +47,7 @@ function getImagePagingButtons($o)
 	for ($i = 0; $i < $stat['total_elements']; $i++ ) {
 		if (!isset($elements[$i]))
 			return array();
-		$pages[] = USE_ORIGINAL_NAMES ? $elements[$i]['filename'] : $elements[$i]['id'] . '/' ;
+		$pages[] = $elements[$i];
 		if ($current_image_name == $elements[$i]['filename']) {
 			$current_image_id = $i;
 		}
