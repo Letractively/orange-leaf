@@ -210,21 +210,6 @@ abstract class Comic_View
 
     private function buildHTML($site_tree = array())
     {
-//        $model =  $site_tree;
-//        $view = array();
-//        $view['root'] = $this->getURLPath();
-//        $view['current_dir'] = $this->current_url;
-//        $view['valid_inc'] = true; //template dies if this param's absent
-//
-//        $view['title'] =  DEFAULT_TITLE;
-//        if (!empty($model['descr'])) 
-//            $view['title'] = $model['descr']['title'];
-//
-//        $view['lang'] = DEFAULT_LANGUAGE;
-//        if (!empty($model['lang']))
-//            $view['lang'] = $model['lang'];
-//
-//        $htmltools = new HTMLTools($view,true);
         $data = new HTMLProvider($this->current_url, $site_tree); 
         ob_start();
         $this->buildHTMLImpl($data);
@@ -239,7 +224,6 @@ abstract class Comic_View
 
     public function cache($path, $site_arr)
     {	
-        //var_dump($path);
         $this->buildHTML($site_arr);
         file_put_contents($path, $this->html);
     }
@@ -251,14 +235,12 @@ abstract class Comic_View
 
     public function displayFromCache($path)
     {
-        //echo "from cache";
         print(file_get_contents($path));
     }
 
 
     public function display($site_tree)
     {
-        //echo "from scratch";
         $this->buildHTML($site_tree);
         echo $this->html;
     }

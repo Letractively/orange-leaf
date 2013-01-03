@@ -2,11 +2,6 @@
 
 function getPagingButtons($stat)
 {
-//	if (empty($stat) || count($stat) < 3) {
-//		return array();
-//	}
-//        
-//	$stat = $stat;
 	$prev_offset = false;
 	if ($stat['offset'] > 0) {
 		$prev_offset =  $stat['offset'] - $stat['elements_on_page'];
@@ -50,7 +45,7 @@ function getImagePagingButtons($o)
 	for ($i = 0; $i < $stat['total_elements']; $i++ ) {
 		if (!isset($elements[$i]))
 			return array();
-		$pages[] = $elements[$i]['filename'];
+		$pages[] = USE_ORIGINAL_NAMES ? $elements[$i]['filename'] : $elements[$i]['id'] . '/' ;
 		if ($current_image_name == $elements[$i]['filename']) {
 			$current_image_id = $i;
 		}
