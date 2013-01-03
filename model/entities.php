@@ -11,7 +11,12 @@
 require_once('common.php');
 require_once('model/helpers.php');
 
-class Comic_XML 
+class Item
+{
+    public $id = null;
+}
+
+class Comic_XML extends Item
 {
 	private $xml = false;
 	
@@ -282,7 +287,9 @@ abstract class ItemList
 			if ($dir_num >= $this->offset 
 				&& (0==$this->elements_on_page || $dir_num < $last_el)  ) 
 			{
-				$data[] = new $this->element_class($comic_dir);
+                                $obj = new $this->element_class($comic_dir);
+                                $obj->id = $dir_num;
+				$data[] = $obj;
 			}
 			$dir_num++;
 		}
