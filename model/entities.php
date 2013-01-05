@@ -51,7 +51,7 @@ class Comic_XML extends Item
 			//throw new Error404("Description file $path is not found.");
 			
 		$this->xml = new DOMDocument();
-		$res = $this->xml->load($path);
+		@$res = $this->xml->load($path);
 		if (false === $res)
 			return;
 		
