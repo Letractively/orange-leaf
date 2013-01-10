@@ -1,13 +1,13 @@
 <?php
 
-class SafeGet
+class SafeGetter
 {
     public function safeGet($data)
     {
         $numargs = func_num_args();
-        if ($numargs <= 0) {
-            return null;
-        }
+//        if ($numargs <= 0) {
+//            return null;
+//        }
         $arg_list = func_get_args();
         $arr = $arg_list[0];
         if (!is_array($arr)) {
@@ -31,12 +31,12 @@ class SafeGet
     {
         $func = array($this,'safeGet');
         $params = func_get_args();
-        return $this->ret(call_user_func_array($func,$params));
+        echo call_user_func_array($func,$params);
     }
     
 }
 
-class DataProvider extends SafeGet
+class DataProvider extends SafeGetter
 {
     private $descr = array();
     private $elements = array();
@@ -95,7 +95,7 @@ class DataProvider extends SafeGet
     public function elements($id = null) {
         if (null === $id) 
             return $this->elements;
-        return $this->safeGet($this->elemets,$id);
+        return $this->safeGet($this->elements,$id);
     }
     
     public function about($str = null) {

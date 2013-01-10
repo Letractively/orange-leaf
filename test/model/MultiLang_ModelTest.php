@@ -15,7 +15,7 @@ class MultiLang_ModelTest extends PHPUnit_Framework_TestCase {
      * This method is called before a test is executed.
      */
     protected function setUp() {
-        $this->object = new MultiLang_Model;
+        //$this->object = new MultiLang_Model;
     }
 
     /**
