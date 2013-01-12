@@ -8,7 +8,9 @@ abstract class Link
     protected abstract function alteredNameLinkImpl($obj);
             
     function __construct($dir) {
-        $this->cur_dir = $dir;
+        $this->cur_dir = dirname($dir.'hook').'/';
+        if ('./' == $this->cur_dir) 
+            $this->cur_dir = '';
         $this->parent_dir = $this->getParentDirInternal($dir);
     }
     
@@ -37,13 +39,13 @@ abstract class Link
         return $this->cur_dir;
     }
     
-    public function href(/* Item */ $obj)
+    public function href(/* Item */ $obj, $use_orig = USE_ORIGINAL_NAMES)
     {
         if (!isset($obj['id'])) {
             throw new Error500('Link::href error building link, corrupted object provided');
         }
         
-        if (USE_ORIGINAL_NAMES) {
+        if ($use_orig) {
             $res =  $this->originalNameLinkImpl($obj);
             if (null !== $res) {
                 return $res;
