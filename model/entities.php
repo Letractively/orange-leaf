@@ -14,6 +14,11 @@ require_once('model/helpers.php');
 class Item
 {
     public $id = null;
+    
+    public function __construct($id = null) {
+        $this->id = $id;
+    }
+
 }
 
 class Comic_XML extends Item
