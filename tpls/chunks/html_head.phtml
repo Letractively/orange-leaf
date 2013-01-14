@@ -1,5 +1,5 @@
 <?php if (empty($o)) die('Can\'t execute.'); ?>
-<head>
+
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>
 		<?php echo $o->title() .
@@ -62,4 +62,3 @@
             
     <!--VK ID:'<?php echo 'cv_' . rtrim($o->descr('dir'),'/') . '_' . $o->lang() . '_' . $o->extra('chapter') . '_' . $o->safeGet($o->extra('image'),'filename') ?>'-->
     <!--FB ID:'<?php echo $o->domain() . $o->currentDir() . $o->safeGet($o->extra('image'),'filename')  ?>'-->
-</head>
