@@ -193,7 +193,49 @@ class HTMLProvider extends DataProvider
     public function currentDir() {
         return $this->current_dir;
     }
+    
+    private function generateId($type, $forPage = false) 
+    {
+        $type = strtolower($type);
+        $res = '';
+        switch ($type) {
+            case 'vk':
+                $res = 'cv_' . rtrim($this->descr('dir'),'/') . 
+                       '_' . $this->lang() . 
+                       '_' . $this->extra('chapter') . '_';
+                
+                if ($forPage) {
+                    if (USE_ORIGINAL_NAMES) 
+                        $res .= $this->safeGet($this->extra('image'),'filename') ;
+                    else 
+                        $res .= $this->safeGet($this->extra('image'),'num') ;
+                }
+                    
+                break;
+            
+            case 'url':
+            case 'fb':
+                $res = $this->domain() . 
+                       $this->currentDir();
+                       
+                if ($forPage) {
+                    if (USE_ORIGINAL_NAMES)
+                        $res .= $this->safeGet($this->extra('image'),'filename') ;
+                    else 
+                        $res .= $this->safeGet($this->extra('image'),'num') ;
+                }
+                break;
+        }
+        return $res;
+    }
+    
+    public function generatePageID($type = null) {
+        return $this->generateId($type,true);
+    }
 
+    public function generateChapterID($type = null) {
+        return $this->generateId($type,false);
+    }
 
     function __construct($str,$arr) {
         parent::__construct($arr);
