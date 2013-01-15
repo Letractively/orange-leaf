@@ -1,5 +1,5 @@
 <?php if (empty($o)) die('Can\'t execute.'); ?> 
-               <?php if ($o->descr('dir')):?>
+               <?php if ( !SINGLE_COMIC_MODE && $o->descr('dir')):?>
                
 			<a href="<?php echo $o->descr('dir')?>" id="up_page">
 				<h2><?php echo $o->title(); ?></h2>

@@ -9,40 +9,6 @@
  ***********************************/ 
 require_once('controller/link.php');
 
-class LinkBuilder extends Link
-{
-    protected function originalNameLinkImpl($obj)
-    {
-        //try to find appropriate data in $obj
-        if (isset($obj['filename'])) {
-            return $this->getCurrentDir() . $obj['filename'] ;
-        }
-
-        if (isset($obj['dir'])) {
-            return $this->getCurrentDir() . $obj['dir'];
-        }
-        return null;
-    }
-    protected function alteredNameLinkImpl($obj)
-    {
-        if (isset($obj['page_id'])) {
-            return $this->getCurrentDir() . $obj['page_id'];
-        }
-        return $this->getCurrentDir() . $obj['id'] . '/';
-    }
-}
-
-class ImageLinkBuilder extends LinkBuilder 
-{
-    protected function alteredNameLinkImpl($obj)
-    {
-        return $this->getParentDir() . $obj['id'] . '/';
-    }
-}
-
-
-
-
 class Request
 {
 	public $domain = '';
@@ -68,7 +34,7 @@ class Comic_Controller
 		if (FALSE === $last_slash_pos) {
 			$req->file = $path;
 		} else {	
-			$len = count($path);
+			//$len = count($path);
 			$req->file = mb_substr($path, $last_slash_pos + 1);
 			$req->dir = mb_substr($path, 0, $last_slash_pos+1);
 		}
@@ -119,11 +85,15 @@ class Comic_Controller
 	{
 		$url = $this->explodeDir();
                 
+                if (SINGLE_COMIC_MODE && SINGLE_COMIC_DIR) {
+                    array_unshift($url,SINGLE_COMIC_DIR);
+                }
+                
 		switch ( count($url) ) {
                     case 0:
                         $this->onlyNumericOffset();
 			$this->model = new Index_Model($this->req->domain, $this->req->file);
-                        $link = new LinkBuilder($this->req->dir);
+                        $link = new Link($this->req->dir);
 			$this->view = new Index_View($link);
                         break;
                         
@@ -135,7 +105,7 @@ class Comic_Controller
                     case 2:
                         $this->onlyNumericOffset();
 			$this->model = new Chapters_Model($this->req->domain, $this->req->file, $url);
-                        $link = new LinkBuilder($this->req->dir);
+                        $link = new Link($this->req->dir);
 			$this->view = new Chapters_View($link);
                         break;
                         
@@ -144,11 +114,11 @@ class Comic_Controller
 				|| !(0 == intval($this->req->file) && !!$this->req->file) ) 
 			{
                             $this->model = new Images_Model($this->req->domain, $this->req->file, $url);
-                            $link = new LinkBuilder($this->req->dir);
+                            $link = new Link($this->req->dir);
                             $this->view = new Chapters_View($link);
 			} else if (USE_ORIGINAL_NAMES) {
                             $this->model = new The_Image_Model($this->req->domain, $this->req->file, $url);
-                            $link = new LinkBuilder($this->req->dir);
+                            $link = new Link($this->req->dir);
                             $this->view = new Image_View($link);
 			} else {       
                             throw new Error404('Original names are turned off.');
@@ -160,7 +130,7 @@ class Comic_Controller
                           throw new Error404('Original names are turned on. Path too long.');  
                         }
                         $this->model = new The_Num_Image_Model($this->req->domain, $url);
-                        $link = new ImageLinkBuilder($this->req->dir);
+                        $link = new Link($this->req->dir);
                         $this->view = new Image_View($link);
                         break;
                     

@@ -1,16 +1,6 @@
 <?php
 require_once 'entities.php';
 
-class ItemMock extends Item 
-{
-    public $val = null;
-    
-    function __construct($str, $id = null) {
-        $this->val = $str;
-        parent::__construct($id);
-    }
-}
-
 class DirListTest extends PHPUnit_Framework_TestCase {
 
     private function makeDirs() {
@@ -45,8 +35,12 @@ class DirListTest extends PHPUnit_Framework_TestCase {
      * @covers FileList::getItems
      */
     public function testGetItems() {
-        $correct = array(new ItemMock('dirList_dir/p1/',0),new ItemMock('dirList_dir/p2/',1),new ItemMock('dirList_dir/p3/',2));
-        $obj = new DirList('ItemMock','dirList_dir/');
+        $correct = array(
+            new Item(0,'dirList_dir/p1/'),
+            new Item(1,'dirList_dir/p2/'),
+            new Item(2,'dirList_dir/p3/')
+        );
+        $obj = new DirList('Item','dirList_dir/');
         $this->assertEquals($correct, $obj->getPageData());
     }
 }

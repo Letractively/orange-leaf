@@ -1,11 +1,9 @@
 <?php
-abstract class Link
+require_once 'model/entities.php';
+class Link
 {
     private $cur_dir = null;    // path/to/dir/
     private $parent_dir = null; // path/to/
- 
-    protected abstract function originalNameLinkImpl($obj);
-    protected abstract function alteredNameLinkImpl($obj);
             
     function __construct($dir) {
         $this->cur_dir = dirname($dir.'hook').'/';
@@ -39,18 +37,53 @@ abstract class Link
         return $this->cur_dir;
     }
     
-    public function href(/* Item */ $obj, $use_orig = USE_ORIGINAL_NAMES)
-    {
-        if (!isset($obj['id'])) {
-            throw new Error500('Link::href error building link, corrupted object provided');
+    public function href($obj, $single_comic = SINGLE_COMIC_MODE, $use_orig = USE_ORIGINAL_NAMES)
+    {   
+        //it is a paging object
+        if (is_array($obj) && isset($obj['page_id']) ) {
+            return $this->getCurrentDir() . $obj['page_id'];
         }
         
-        if ($use_orig) {
-            $res =  $this->originalNameLinkImpl($obj);
-            if (null !== $res) {
-                return $res;
+        //it is an Item
+        $id = $realPath = null;
+        
+        if (is_array($obj) && isset($obj['id']) && isset($obj['realPath'])) {
+            $id = $obj['id'];
+            $realPath = $obj['realPath'];
+            
+        } else if ( $obj instanceof Item ) {
+            $id = $obj->id;
+            $realPath = $obj->realPath;
+            
+        } else {
+            throw new Error500('Link::href error building link, wrong object provided');
+        }
+        
+        $res = '';
+        $dirs = explode('/', $realPath);    // [domain, comic, language, chapter, filename]
+        if ( !isset($dirs[1]) ) {
+            throw new Error500('Link::href error building link, corrupted Item::realPath');
+        } 
+        if (!$single_comic) { 
+            $res = $dirs[1] . '/';          // comic/
+        }
+        
+        if ( isset($dirs[2]) ) { 
+            $res .= $dirs[2] . '/';         // [comic/]language/
+        }
+        
+        if ( isset($dirs[3]) ) { 
+            $res .= $dirs[3] . '/';         // [comic/]language/chapter/
+        }
+        
+        if ( isset($dirs[4]) ) { 
+            if ($use_orig) {
+                $res .= $dirs[4] ;         // [comic/]language/chapter/filename
+            } else {
+                $res .= $id . '/';              // [comic/]language/chapter/id
             }
-        }  
-        return $this->alteredNameLinkImpl($obj);
+        }
+        
+        return $res;
     }
 }

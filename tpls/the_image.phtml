@@ -18,18 +18,8 @@
 	<div class="com_body">
 		
             <div class="com_image_props">
-		<?php if ($o->descr('dir')):?>
-			
-
-			<a href="<?php echo $o->descr('dir') . 
-                                            $o->lang() . '/' . 
-                                            $o->extra('chapter') . '/';?>">
-				<h3><?php echo $o->translate('chapter'); ?> <?php echo $o->extra('chapter'); ?></h3>
-			</a>
 		
-		
-		<?php endif;?>
-		
+		<?php require('chunks/chapterName.phtml'); ?>
 		
 		<p><?php echo ($o->safeGet($o->extra('page'),'number')+1); ?> / <?php echo $o->safeGet($o->extra('page'),'total'); ?></p>
             </div>

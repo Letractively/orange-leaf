@@ -5,6 +5,7 @@ class ItemListTest extends PHPUnit_Framework_TestCase {
     
     protected $obj;
     protected $list;
+    protected $answer;
     
     private function makeDirs() {
         mkdir('itemList_dir');
@@ -21,8 +22,19 @@ class ItemListTest extends PHPUnit_Framework_TestCase {
         $this->makeDirs();
         
         $params = array('Item','itemList_dir/');
-        $this->list = array(new Item(0), new Item(1), new Item(2));
-        $list = array(0,1,2);
+        
+        /* ItemList must transform $this->list to $this->answer */
+        $this->answer = array(
+            new Item(0,'first/'), 
+            new Item(1,'second/'), 
+            new Item(2,'third/')
+        );
+        $this->list = array(
+            'first/',
+            'second/',
+            'third/'
+        );
+        
         $this->obj = $this->getMockForAbstractClass('ItemList',$params,'ItemsListMock',false);
         $this->obj->expects($this->once())
             ->method('getItems')
@@ -64,7 +76,7 @@ class ItemListTest extends PHPUnit_Framework_TestCase {
     public function testGetPageData() {
         $this->obj->__construct('Item','itemList_dir/');
         $res = $this->obj->getPageData();
-        $this->assertEquals($this->list, $res);
+        $this->assertEquals($this->answer, $res);
     }
 
 }

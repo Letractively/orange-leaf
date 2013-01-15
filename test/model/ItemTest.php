@@ -9,8 +9,9 @@ class ItemTest extends PHPUnit_Framework_TestCase {
      * @covers Item::__construct
      */
     public function testCtor() {
-        $obj = new Item(12);
+        $obj = new Item(12, 'path/to/file/');
         $this->assertEquals(12,$obj->id);
+        $this->assertEquals('path/to/file/',$obj->realPath);
     }
 
 }

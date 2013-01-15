@@ -14,9 +14,11 @@ require_once('model/helpers.php');
 class Item
 {
     public $id = null;
+    public $realPath = null;
     
-    public function __construct($id = null) {
+    public function __construct($id = null, $realPath = null) {
         $this->id = $id;
+        $this->realPath = $realPath;
     }
 
 }
@@ -251,7 +253,7 @@ class Chapter_Description extends Book_Description
 
 class Image_Description
 {
-	public $path = '';
+	public $path = '';  //TODO: get rid of this, it doubles Item::realPath
 	public $filename = '';
 	function __construct($path='')
 	{
@@ -294,6 +296,7 @@ abstract class ItemList
 			{
                                 $obj = new $this->element_class($comic_dir);
                                 $obj->id = $dir_num;
+                                $obj->realPath = $comic_dir;
 				$data[] = $obj;
 			}
 			$dir_num++;

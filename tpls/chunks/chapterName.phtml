@@ -1,0 +1,12 @@
+<?php if (empty($o)) die('Can\'t execute.'); ?>
+                <?php if ($o->extra('chapter')):?>
+			
+
+			<a href="<?php echo ( !SINGLE_COMIC_MODE ? $o->descr('dir') : '' ) . 
+                                            $o->lang() . '/' . 
+                                            $o->extra('chapter') . '/';?>">
+				<h3><?php echo $o->translate('chapter'); ?> <?php echo $o->extra('chapter'); ?></h3>
+			</a>
+		
+		
+		<?php endif;?>

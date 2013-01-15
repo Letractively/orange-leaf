@@ -12,9 +12,9 @@ class LinkTest extends PHPUnit_Framework_TestCase {
     protected $obj3;
 
     protected function setUp() {
-        $this->obj1 = $this->getMockForAbstractClass('Link',array($this->path1));
-        $this->obj2 = $this->getMockForAbstractClass('Link',array($this->path2));
-        $this->obj3 = $this->getMockForAbstractClass('Link',array($this->path3));
+        $this->obj1 = new Link($this->path1);
+        $this->obj2 = new Link($this->path2);
+        $this->obj3 = new Link($this->path3);
     }
 
     protected function tearDown() {
@@ -26,7 +26,7 @@ class LinkTest extends PHPUnit_Framework_TestCase {
      * 
      */
     public function testCtor() {
-        $obj = $this->getMockForAbstractClass('Link',array($this->path1));
+        $this->obj1 = new Link($this->path1);
     }
 
     /**
@@ -56,21 +56,32 @@ class LinkTest extends PHPUnit_Framework_TestCase {
      * @expectedException Error500
      * 
      */
-    public function testHref3() {
+    public function testHrefErr1() {
         $obj = '';
         $this->obj1->href($obj);
     }
     
-     /**
+    /**
      * @covers Link::href
+     * @expectedException Error500
      * 
      */
-    public function testHref2() {
-        $obj = array('id' => 0);
-        $this->obj1->expects($this->any())
-                   ->method('originalNameLinkImpl')
-                   ->with($this->equalTo($obj));
-        $this->obj1->href($obj, true);
+    public function testHrefErr2() {
+        $obj = array('id'=>123);
+        $this->obj1->href($obj);
+    }
+    
+    /**
+     * @covers Link::href
+     * @expectedException Error500
+     * 
+     */
+    public function testHrefErr3() {
+        $testItem = array(
+            'id' => 123, 
+            'realPath'=>'file.ext'
+        );
+        $this->obj1->href($testItem, false, false);
     }
 
     /**
@@ -78,25 +89,45 @@ class LinkTest extends PHPUnit_Framework_TestCase {
      * 
      */
     public function testHref() {
-        $obj = array('id' => 0);
-        $this->obj1->expects($this->any())
-                   ->method('originalNameLinkImpl')
-                   ->with($this->equalTo($obj))
-                   ->will($this->returnValue('Win'));
+        $testItem = array(
+            'id' => 123, 
+            'realPath'=>'example.com/com/ln/ch/file.ext'
+        );
+        $this->assertEquals( 'com/ln/ch/123/', 
+                $this->obj1->href($testItem, false, false) );
         
-        $this->obj1->expects($this->once())
-                   ->method('alteredNameLinkImpl')
-                   ->with($this->equalTo($obj));
+        $this->assertEquals( 'com/ln/ch/file.ext', 
+                $this->obj1->href($testItem, false, true) );
         
-        $this->obj1->href($obj, true);
-        $this->obj1->href($obj, false);
+        $this->assertEquals( 'ln/ch/file.ext', 
+                $this->obj1->href($testItem, true, true) );
         
         
-//        $this->obj1->expects($this->any())
-//                   ->method('originalNameLinkImpl')
-//                   ->with($this->equalTo($obj))
-//                   ->will($this->returnValue(null));
-//        $this->obj1->href($obj, true);
+        $testItem2 = array(
+            'page_id' => 123
+        );
+        $this->assertEquals( 'test/path/123', 
+                $this->obj1->href($testItem2, false, false) );
+        
+        $this->assertEquals( 'test/path/123', 
+                $this->obj1->href($testItem2, false, true) );
+        
+        $this->assertEquals( 'test/path/123', 
+                $this->obj1->href($testItem2, true, true) );
+        
+        $testItem3 = new Item(
+            123, 
+            'example.com/com/ln/ch/file.ext'
+        );
+        $this->assertEquals( 'com/ln/ch/123/', 
+                $this->obj1->href($testItem3, false, false) );
+        
+        $this->assertEquals( 'com/ln/ch/file.ext', 
+                $this->obj1->href($testItem3, false, true) );
+        
+        $this->assertEquals( 'ln/ch/file.ext', 
+                $this->obj1->href($testItem3, true, true) );
+
     }
 
 }

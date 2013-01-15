@@ -8,12 +8,12 @@
             <?php if($lang != $o->lang()):?>
             
             <a href="<?php echo $o->homeUrl() . 
-                        $o->descr('dir') .
+                        ( SINGLE_COMIC_MODE ? '' : $o->descr('dir') ) .
                         $lang . '/' .
                         $o->extra('chapter') .
                         ($o->extra('chapter') ? '/':'') . 
-                        $o->safeGet($o->extra('image'), USE_ORIGINAL_NAMES ? 'filename' : 'num') .
-                        (USE_ORIGINAL_NAMES ? '' : '/')//TODO: move to LinkBuilder
+                        $o->safeGet( $o->extra('image'), USE_ORIGINAL_NAMES ? 'filename' : 'num' ) .
+                        (USE_ORIGINAL_NAMES || !$o->extra('image') ? '' : '/')//TODO: move to LinkBuilder
                     ?>">
                 <?php echo $lang;?>
             </a>
