@@ -91,6 +91,7 @@ class Comic_Controller
                 
 		switch ( count($url) ) {
                     case 0:
+                        //Index, outputs books 
                         $this->onlyNumericOffset();
 			$this->model = new Index_Model($this->req->domain, $this->req->file);
                         $link = new Link($this->req->dir);
@@ -98,11 +99,13 @@ class Comic_Controller
                         break;
                         
                     case 1:
+                        //Book, outputs languages
                         $this->onlyNumericOffset();
 			$this->model = new Book_Model($this->req->domain, $url);
                         break;
                         
                     case 2:
+                        //Language, outputs chapters
                         $this->onlyNumericOffset();
 			$this->model = new Chapters_Model($this->req->domain, $this->req->file, $url);
                         $link = new Link($this->req->dir);
@@ -110,22 +113,54 @@ class Comic_Controller
                         break;
                         
                     case 3:
-                        if ($this->req->file === strval(intval($this->req->file)) //if number
-				|| !(0 == intval($this->req->file) && !!$this->req->file) ) 
-			{
-                            $this->model = new Images_Model($this->req->domain, $this->req->file, $url);
-                            $link = new Link($this->req->dir);
-                            $this->view = new Chapters_View($link);
-			} else if (USE_ORIGINAL_NAMES) {
-                            $this->model = new The_Image_Model($this->req->domain, $this->req->file, $url);
-                            $link = new Link($this->req->dir);
-                            $this->view = new Image_View($link);
-			} else {       
-                            throw new Error404('Original names are turned off.');
+                        //Chapter, outputs ...
+//                        if ($this->req->file === strval(intval($this->req->file)) //if number
+//				|| !(0 == intval($this->req->file) && !!$this->req->file) ) // and not null
+//			{
+//                            //... a list of images in chapter
+//                            $this->model = new Images_Model($this->req->domain, $this->req->file, $url);
+//                            $link = new Link($this->req->dir);
+//                            $this->view = new Chapters_View($link);
+//			
+//                        } else if (USE_ORIGINAL_NAMES) {
+//                            //... an image
+//                            $this->model = new The_Image_Model($this->req->domain, $this->req->file, $url);
+//                            $link = new Link($this->req->dir);
+//                            $this->view = new Image_View($link);
+//                            
+//			} else {       
+//                            throw new Error404('Original names are turned off.');
+//                        }
+                        
+                        if ( '' === $this->req->file ) {
+                            //... a list of images
+                            $page_id = '';
+                            if ($this->req->query) {
+                                $q = array();
+                                parse_str($this->req->query, $q);
+                                if ( isset($q['page']) && 0 !== intval($q['page']) ) {
+                                    $page_id = intval($q['page']);
+                                    if (0 === $page_id) $page_id = '';
+                                }
+                            }
+                            $this->model = new Images_Model($this->req->domain, $page_id, $url);
+                            $this->view = new Chapters_View( new Link($this->req->dir) );
+                        } else {
+                           //... an Image 
+                           if (USE_ORIGINAL_NAMES) {
+                               $this->model = new The_Image_Model($this->req->domain, $this->req->file, $url);
+                           } else {
+                               $this->onlyNumericOffset();
+                               array_push($url, $this->req->file);
+                               $this->model = new The_Num_Image_Model($this->req->domain, $url); 
+                           }
+                           $this->view = new Image_View( new Link($this->req->dir) );
                         }
+                        
                         break;
                         
                     case 4:
+                        //Image
                         if (USE_ORIGINAL_NAMES) {
                           throw new Error404('Original names are turned on. Path too long.');  
                         }

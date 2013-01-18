@@ -41,7 +41,7 @@ class Link
     {   
         //it is a paging object
         if (is_array($obj) && isset($obj['page_id']) ) {
-            return $this->getCurrentDir() . $obj['page_id'];
+            return $this->getCurrentDir() . '?page=' . $obj['page_id'];
         }
         
         //it is an Item
@@ -80,7 +80,7 @@ class Link
             if ($use_orig) {
                 $res .= $dirs[4] ;         // [comic/]language/chapter/filename
             } else {
-                $res .= $id . '/';              // [comic/]language/chapter/id
+                $res .= $id /*. '/'*/;              // [comic/]language/chapter/id
             }
         }
         

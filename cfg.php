@@ -9,7 +9,7 @@ define('ADMIN_EMAIL',		'mail@ilna.ru');        //Admin's e-mail
 /* URL handling */
 define('SUBDIR',                'com');                 //Subdir, where the reader resides
 define('USE_ORIGINAL_NAMES',    false);                 //use original folder and file names in url, e.g. http://ilna.ru/com/orange_life/en/00/ol_00_06.jpg -> http://ilna.ru/com/orange_life/en/00/06/
-define('SINGLE_COMIC_MODE',     true);                 //Setting to true will avoid inserting comic name after domain name and subdir http://ilna.ru/com/orange_life/en/00/ -> http://ilna.ru/com/en/00/
+define('SINGLE_COMIC_MODE',     false);                 //Setting to true will avoid inserting comic name after domain name and subdir http://ilna.ru/com/orange_life/en/00/ -> http://ilna.ru/com/en/00/
 define('SINGLE_COMIC_DIR',      'the_islander');            //If single mode turned on, this comic will be the only one 
 
 /* Filenames. */                

@@ -93,7 +93,7 @@ class LinkTest extends PHPUnit_Framework_TestCase {
             'id' => 123, 
             'realPath'=>'example.com/com/ln/ch/file.ext'
         );
-        $this->assertEquals( 'com/ln/ch/123/', 
+        $this->assertEquals( 'com/ln/ch/123', 
                 $this->obj1->href($testItem, false, false) );
         
         $this->assertEquals( 'com/ln/ch/file.ext', 
@@ -106,20 +106,20 @@ class LinkTest extends PHPUnit_Framework_TestCase {
         $testItem2 = array(
             'page_id' => 123
         );
-        $this->assertEquals( 'test/path/123', 
+        $this->assertEquals( 'test/path/?page=123', 
                 $this->obj1->href($testItem2, false, false) );
         
-        $this->assertEquals( 'test/path/123', 
+        $this->assertEquals( 'test/path/?page=123', 
                 $this->obj1->href($testItem2, false, true) );
         
-        $this->assertEquals( 'test/path/123', 
+        $this->assertEquals( 'test/path/?page=123', 
                 $this->obj1->href($testItem2, true, true) );
         
         $testItem3 = new Item(
             123, 
             'example.com/com/ln/ch/file.ext'
         );
-        $this->assertEquals( 'com/ln/ch/123/', 
+        $this->assertEquals( 'com/ln/ch/123', 
                 $this->obj1->href($testItem3, false, false) );
         
         $this->assertEquals( 'com/ln/ch/file.ext', 
