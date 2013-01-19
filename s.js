@@ -27,11 +27,17 @@ function loadPage(attribs, obj)
 function innerPageOnLoad(responseText, textStatus, XMLHttpRequest)
 {
     //TODO: check responseText
+    
+    //change hash
     var h = $(this).data('hash');
     var obj = {};
     obj[h.name] = h.value;
-    hash.clear();
-    hash.add(obj);
+    //hash.clear();
+    //if (h.value > 1) {
+        hash.add(obj);
+    //} else {
+        
+    //}
     
     var attribs = getPagingAttributes();
     var current_page_id = parseInt( hash.get(attribs['hash_variable']) );
@@ -40,7 +46,7 @@ function innerPageOnLoad(responseText, textStatus, XMLHttpRequest)
     $("."+attribs['active_name']).removeClass(attribs['active_name']);
     $(attribs['link_id'] + "[title='"+ current_page_id +"']").addClass(attribs['active_name']);
     
-    //correct next_button
+    //change next_button
     var next = 1 + current_page_id;
     var objs = $(attribs['link_id'] + "[title='"+ next +"']");
     if (objs.length <= 0) 
@@ -54,7 +60,7 @@ function innerPageOnLoad(responseText, textStatus, XMLHttpRequest)
         $(attribs['next_id']).show();   
     }
    
-    //correct prev_button
+    //change prev_button
     var prev = -1 + current_page_id;
     objs = $(attribs['link_id'] + "[title='"+ prev +"']");
     if (objs.length <= 0) 
@@ -77,15 +83,15 @@ function loadInnerPageIfNeeded()
    if ( !v )
    {
        v = 1;
-       var obj = {};
+       /*var obj = {};
        obj[attribs['hash_variable']] = v;
        hash.clear();
-       hash.add(obj);
+       hash.add(obj);*/
    }
    var objs = $(attribs['link_id'] + "[title='"+ v +"']");
    if (objs.length <= 0) 
    {
-       hash.clear();
+       //hash.clear();
        return;
    }
    loadPage(attribs,objs[0]);
@@ -93,7 +99,7 @@ function loadInnerPageIfNeeded()
 }
 
 function getPagingAttributes(){
-    //fuck js, dunno how to check if function's implemented. 
+    //dunno how to check if function's implemented. 
     try {
         return getPagingAttributesImpl();
     }
