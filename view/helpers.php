@@ -62,7 +62,7 @@ function getImagePagingButtons($o)
 	return array(
 		'prev' => $prev_offset,
 		'next' => $next_offset,
-		'current' => $current_image_name,
+		'current' => (USE_ORIGINAL_NAMES ? $current_image_name : $current_image_id),
 		'pages' => $pages,
 		'current_num' => $current_image_id
 	);

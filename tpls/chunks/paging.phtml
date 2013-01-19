@@ -13,16 +13,18 @@
                 <?php include('prevButton.phtml'); ?>
 		
 		<?php for($i=0; !empty($btns['pages']) && count($btns['pages']) > 1 && $i<count($btns['pages']); $i++):?>
-			<?php if(isset($btns['current']) && $btns['pages'][$i] == $btns['current']): ?>
+			<?php if(isset($btns['current']) && $btns['pages'][$i]['id'] == $btns['current']): ?>
 			
 				<a href='<?php echo (($btns['pages'][$i]) ? $l->href($btns['pages'][$i]) : $l->getCurrentDir()) ; ?>' title="<?php echo  ($i + 1); ?>" class='nav_button active_page'>
-					<?php echo  ($i + 1); ?>
+					<span class='com_page_number'><?php echo  ($i + 1); ?></span>
+                                        <span class='com_page_circle'>&#9679;</span>
 				</a> &nbsp;
 			
 			<?php else: ?>
 			
 				<a href='<?php echo (($btns['pages'][$i]) ? $l->href($btns['pages'][$i]) : $l->getCurrentDir()) ; ?>' title="<?php echo  ($i + 1); ?>" class='nav_button'>
-					<?php echo  ($i + 1); ?>
+					<span class='com_page_number'><?php echo  ($i + 1); ?></span>
+                                        <span class='com_page_circle'>&#9679;</span>
 				</a> &nbsp;
 			
 			<?php endif;?>

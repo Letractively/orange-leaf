@@ -18,6 +18,10 @@ hr.cleaner{ clear:both; }
 .com_el li{ float:left; list-style: none inside none; margin:5px; }
 
 .com_navigation{ clear: both; text-align: center; }
+.active_page {text-decoration: none; color:gray !important;}
+.nav_button {display: inline-block; text-decoration: none; /*width:20px; height:20px; margin:2px; float:left;background-color: red;*/}
+.com_page_number {display:none;}
+.com_page_circle {}
 
 .com_image{ text-align: center; }
 .com_image_props{ }
@@ -26,4 +30,3 @@ hr.cleaner{ clear:both; }
 .com_otherLangs ul{ margin: 0; padding: 0; }
 .com_otherLangs li{ float:left; list-style: none inside none; margin:5px; }
 
-a.active_page{text-decoration: none;}
