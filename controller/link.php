@@ -76,7 +76,7 @@ class Link
             $res .= $dirs[3] . '/';         // [comic/]language/chapter/
         }
         
-        if ( isset($dirs[4]) ) { 
+        if ( isset($dirs[4]) && '' !== $dirs[4]) { 
             if ($use_orig) {
                 $res .= $dirs[4] ;         // [comic/]language/chapter/filename
             } else {

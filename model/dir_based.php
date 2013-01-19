@@ -52,9 +52,37 @@ abstract class Node_Model extends MultiLang_Model
     private $description    = null;
     private $about          = null;
     private $extra          = null;
+    private $neighbors     = null;
     
     abstract protected function getChildrenImpl($offset);
     abstract protected function getDescriptionImpl($offset);
+    
+    /* virtual */ protected function getNeighbors() {
+        $parent_dir = getParentDirName($this->getCurrentDir());
+        if (!$parent_dir) {
+            return array();
+        }
+        
+        /* find current dir */
+        $items = new DirList('Item',$parent_dir);
+        $dirs = $items->getPageData();
+        $cur_dir_index = null;
+        for ($i = 0; $i < count($dirs); $i++) {
+            if ( $dirs[$i]->realPath === $this->getCurrentDir() ) {
+                $cur_dir_index = $i;
+                break;
+            }
+        }
+        if (null === $cur_dir_index) {
+            throw new Error500("Model can't find neighbors.");
+        }
+        
+        /* populate array */
+        return array(
+            'previousDir' => ( isset($dirs[$cur_dir_index-1]) ? $dirs[$cur_dir_index-1] : null),
+            'nextDir' => ( isset($dirs[$cur_dir_index+1]) ? $dirs[$cur_dir_index+1] : null )
+        );
+    }
     
     /* virtual */ protected function getAboutImpl($offset) {
         $dir = $this->getCurrentDir() . ABOUT_DIR_NAME;
@@ -83,6 +111,9 @@ abstract class Node_Model extends MultiLang_Model
         if (null === $this->extra)
                 $this->extra = $this->getExtraImpl($this->offset);
         
+        if (null === $this->neighbors)
+                $this->neighbors = $this->getNeighbors();
+        
         $elements = array();
         foreach($this->list->getPageData() as $el) 
                 $elements[] = get_object_vars($el);
@@ -96,6 +127,7 @@ abstract class Node_Model extends MultiLang_Model
         $arr['extra'] = $this->extra;
         //TODO: throw exception if we already have such field
         $arr['extra']['otherLangs'] = $this->linksToOtherLangs($this->description->languages);
+        $arr['extra']['neighbors'] = $this->neighbors;
         return $this->serializeDecorator($arr);
     }
     

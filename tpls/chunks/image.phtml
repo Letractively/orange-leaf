@@ -6,6 +6,12 @@
             <a href='<?php echo $l->href($btn['next']) ?>'>
                 <img src='<?php echo $o->homeUrl() . $image['path']?>' \>
             </a>
+        
+        <?php elseif ( $o->safeGet($o->extra('neighbors'),'nextDir') ): ?>
+            <a href='<?php echo $l->href($o->safeGet($o->extra('neighbors'),'nextDir')) ?>'>
+                <img src='<?php echo $o->homeUrl() . $image['path']?>' \>
+            </a>
+        
         <?php else:?>
             <img src='<?php echo $o->homeUrl() . $image['path']?>' \>
         <?php endif;?>
