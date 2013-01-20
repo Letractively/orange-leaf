@@ -2,7 +2,7 @@
 /************************************
  *
  *	Comic Viewer, Entry point
- *
+ *      Version 1.0
  *	Ilnar Taichinov, 2012
  *	mail@ilna.ru
  *
