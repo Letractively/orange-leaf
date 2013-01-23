@@ -54,7 +54,8 @@ class Comic_Controller
 	private function explodeDir()
 	{
 		$raw_url_parts = explode('/',$this->req->dir);
-		$subdir_parts = explode('/',SUBDIR);
+                //bugfix, error 404 in case of empty subdir
+		$subdir_parts = ( '' === SUBDIR) ? array() : explode('/',SUBDIR);
 		$url_parts = array();
 		$subdir_index = 0;
 		foreach ($raw_url_parts as $part) {
