@@ -6,7 +6,8 @@
 			</a>
 		
 		<?php else:?>
-			
-			<h2><?php echo $o->title(); ?></h2>
+			<a href="<?php echo $o->homeUrl(); ?>">
+                            <h2><?php echo $o->title(); ?></h2>
+                        </a>
 		
 		<?php endif;?>
