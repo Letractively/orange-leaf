@@ -59,7 +59,7 @@
             
                 -->
         </script>*/ ?>
-            
-    <!--VK ID:'<?php echo $o->generateChapterID('vk') . '\'   \'' . $o->generatePageID('vk') ; /* echo 'cv_' . rtrim($o->descr('dir'),'/') . '_' . $o->lang() . '_' . $o->extra('chapter') . '_' . $o->safeGet($o->extra('image'),'filename')*/ ?>'-->
-    <!--FB ID:'<?php echo $o->generateChapterID('fb') . '\'   \'' . $o->generatePageID('fb') ;/* echo $o->domain() . $o->currentDir() . $o->safeGet($o->extra('image'),'filename')*/  ?>'-->
-            
+        <?php if (IS_DEBUGGING):?>    
+    <!--VK ID:'<?php echo $o->generateBookID('vk') . '\'   \'' . $o->generateChapterID('vk') . '\'   \'' . $o->generatePageID('vk'); ?>'-->
+    <!--FB ID:'<?php echo $o->generateBookID('fb') . '\'   \'' . $o->generateChapterID('fb') . '\'   \'' . $o->generatePageID('fb'); ?>'-->
+        <?php endif; ?>

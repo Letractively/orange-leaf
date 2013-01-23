@@ -194,17 +194,20 @@ class HTMLProvider extends DataProvider
         return $this->current_dir;
     }
     
-    private function generateId($type, $forPage = false) 
+    private function generateId($type, $showBook = false, $showPage = false) 
     {
         $type = strtolower($type);
         $res = '';
         switch ($type) {
             case 'vk':
-                $res = 'cv_' . rtrim($this->descr('dir'),'/') . 
-                       '_' . $this->lang() . 
-                       '_' . $this->extra('chapter') . '_';
+                $res = 'cv_' . rtrim($this->descr('dir'),'/') ;
+                if (!$showBook) {
+                    break;
+                }
+                $res .=  '_' . $this->lang() . 
+                         '_' . $this->extra('chapter') . '_';
                 
-                if ($forPage) {
+                if ($showPage) {
                     if (USE_ORIGINAL_NAMES) 
                         $res .= $this->safeGet($this->extra('image'),'filename') ;
                     else 
@@ -215,10 +218,23 @@ class HTMLProvider extends DataProvider
             
             case 'url':
             case 'fb':
-                $res = $this->domain() . 
-                       $this->currentDir();
+                $res = $this->domain(); 
+                
+                if ($showBook) {
+                    $res .= $this->currentDir();
+                } else {
+                    $res .= '/';
+                    if (SUBDIR) {
+                        $res .= SUBDIR . '/';
+                    }
+                    if (!SINGLE_COMIC_MODE) {
+                          $res .= $this->descr('dir');
+                    }
+                    break;
+                }
                        
-                if ($forPage) {
+                       
+                if ($showPage) {
                     if (USE_ORIGINAL_NAMES)
                         $res .= $this->safeGet($this->extra('image'),'filename') ;
                     else 
@@ -230,11 +246,15 @@ class HTMLProvider extends DataProvider
     }
     
     public function generatePageID($type = null) {
-        return $this->generateId($type,true);
+        return $this->generateId($type,true,true);
     }
 
     public function generateChapterID($type = null) {
-        return $this->generateId($type,false);
+        return $this->generateId($type,true);
+    }
+    
+    public function generateBookID($type = null) {
+        return $this->generateId($type);
     }
 
     function __construct($str,$arr) {
