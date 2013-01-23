@@ -150,7 +150,7 @@ class HTMLProvider extends DataProvider
     public function homeUrl() {
         if ( !isset($this->cache['home_url']) ) {
             $this->cache['home_url'] = dirname($_SERVER['SCRIPT_NAME']);
-            if ( '/' !== dirname($_SERVER['SCRIPT_NAME']) ) {
+            if ( "/" != $this->cache['home_url'] && "\\" != $this->cache['home_url']) {
                 $this->cache['home_url'] .= '/';
             }
         }
