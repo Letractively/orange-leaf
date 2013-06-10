@@ -7,9 +7,9 @@
  *	mail@ilna.ru
  *
  ***********************************/ 
-require_once('model/helpers.php');
-require_once('model/entities.php');
-require_once('model/dir_based.php');
+require_once(APPLICATION_ROOT . 'model/helpers.php');
+require_once(APPLICATION_ROOT . 'model/entities.php');
+require_once(APPLICATION_ROOT . 'model/dir_based.php');
 
 class Index_Model extends Node_Model
 {

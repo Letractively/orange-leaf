@@ -11,10 +11,10 @@
 require_once('cfg.php');
 
 /************ INCLUDES *************/
-require_once('common.php');
-require_once('model.php');
-require_once('view.php');
-require_once('controller.php');
+require_once(APPLICATION_ROOT . 'common.php');
+require_once(APPLICATION_ROOT . 'model.php');
+require_once(APPLICATION_ROOT . 'view.php');
+require_once(APPLICATION_ROOT . 'controller.php');
 
 
 /************ HELPER FUNCTIONS *****/

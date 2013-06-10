@@ -9,8 +9,8 @@
  ***********************************/ 
  
 //require_once('view/htmltools.php');
-require_once('view/comic_view.php');
-require_once('view/helpers.php');
+require_once(APPLICATION_ROOT . 'view/comic_view.php');
+require_once(APPLICATION_ROOT . 'view/helpers.php');
  
 class Image_View extends Comic_View
 {

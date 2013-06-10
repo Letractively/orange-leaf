@@ -46,6 +46,9 @@ define('ERROR_404_PAGE',	'tpls/404.html');	//Path to error 404 page
 define('ERROR_403_PAGE',	'tpls/403.html');	//Path to error 403 page
 define('ERROR_500_PAGE',	'tpls/500.html');	//Path to error 500 page
 
+/* Libs dir */
+define('APPLICATION_ROOT',      '');                    //Relative path to classes
+
 /* Localization */
 function g_dictionary()
 {

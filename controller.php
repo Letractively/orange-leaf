@@ -7,7 +7,7 @@
  *	mail@ilna.ru
  *
  ***********************************/ 
-require_once('controller/link.php');
+require_once(APPLICATION_ROOT . 'controller/link.php');
 
 class Request
 {
