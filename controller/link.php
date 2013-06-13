@@ -1,5 +1,5 @@
 <?php
-require_once 'model/entities.php';
+require_once APPLICATION_ROOT . 'model/entities.php';
 class Link
 {
     private $cur_dir = null;    // path/to/dir/
