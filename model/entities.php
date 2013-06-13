@@ -8,8 +8,8 @@
  *	mail@ilna.ru
  *
  ***********************************/ 
-require_once('common.php');
-require_once('model/helpers.php');
+require_once(APPLICATION_ROOT . 'common.php');
+require_once(APPLICATION_ROOT . 'model/helpers.php');
 
 class Item
 {
