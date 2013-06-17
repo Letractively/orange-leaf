@@ -150,10 +150,9 @@ function NavigateThrough (event)
 {   
 if (!document.getElementById) return;
 if (window.event) event = window.event;
-    if (event.ctrlKey)
+    if (event.ctrlKey || event.altKey)
     {
         var link = null;
-        var href = null;
         switch (event.keyCode ? event.keyCode : event.which ? event.which : null)
             {
                 case 0x25:
