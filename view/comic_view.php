@@ -174,7 +174,8 @@ class HTMLProvider extends DataProvider
     
     public function thumb_abs($path, $width = 0, $height = 0)
     {
-        $src = TUMBNAIL_SCRIPT . '?src=' . $path;
+        $src = TUMBNAIL_SCRIPT . '?i=' . $path;
+        //$src .=  '&i=' . $path;
         if ( ($width = intval($width)) ) 
             $src .= '&w=' . $width;
         
