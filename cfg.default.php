@@ -45,6 +45,7 @@ define('TUMBNAIL_SCRIPT',	'thumb/phpThumb.php');	//Path to thumbnailzator
 define('ERROR_404_PAGE',	'tpls/404.html');	//Path to error 404 page
 define('ERROR_403_PAGE',	'tpls/403.html');	//Path to error 403 page
 define('ERROR_500_PAGE',	'tpls/500.html');	//Path to error 500 page
+define('NAV_PAGE_SYMBOL',       '&#9679;');             //Symbol used for page.
 
 /* Libs dir */
 define('APPLICATION_ROOT',      '');                    //Relative path to classes

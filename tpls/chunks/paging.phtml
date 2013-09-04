@@ -17,14 +17,14 @@
 			
 				<a href='<?php echo (($btns['pages'][$i]) ? $l->href($btns['pages'][$i]) : $l->getCurrentDir()) ; ?>' title="<?php echo  ($i + 1); ?>" class='nav_button active_page'>
 					<span class='com_page_number'><?php echo  ($i + 1); ?></span>
-                                        <span class='com_page_circle'>&#9679;</span>
+                                        <span class='com_page_circle'><?php echo NAV_PAGE_SYMBOL ?></span>
 				</a> &nbsp;
 			
 			<?php else: ?>
 			
 				<a href='<?php echo (($btns['pages'][$i]) ? $l->href($btns['pages'][$i]) : $l->getCurrentDir()) ; ?>' title="<?php echo  ($i + 1); ?>" class='nav_button'>
 					<span class='com_page_number'><?php echo  ($i + 1); ?></span>
-                                        <span class='com_page_circle'>&#9679;</span>
+                                        <span class='com_page_circle'><?php echo NAV_PAGE_SYMBOL ?></span>
 				</a> &nbsp;
 			
 			<?php endif;?>
