@@ -107,9 +107,9 @@ class HTMLProviderTest extends PHPUnit_Framework_TestCase {
      * 
      */
     public function testThumb_abs() {
-        $result1 = TUMBNAIL_SCRIPT . '?src=test.jpg';
-        $result2 = TUMBNAIL_SCRIPT . '?src=test.jpg&w=100';
-        $result3 = TUMBNAIL_SCRIPT . '?src=test.jpg&w=100&h=100';
+        $result1 = TUMBNAIL_SCRIPT . '?i=test.jpg';
+        $result2 = TUMBNAIL_SCRIPT . '?i=test.jpg&w=100';
+        $result3 = TUMBNAIL_SCRIPT . '?i=test.jpg&w=100&h=100';
         $this->assertEquals($result1,$this->normalObj->thumb_abs('test.jpg'));
         $this->assertEquals($result2,$this->normalObj->thumb_abs('test.jpg', 100));
         $this->assertEquals($result3,$this->normalObj->thumb_abs('test.jpg', 100, 100));
@@ -121,9 +121,9 @@ class HTMLProviderTest extends PHPUnit_Framework_TestCase {
      * 
      */
     public function testThumb() {
-        $result1 = TUMBNAIL_SCRIPT . '?src='.$this->normalObj->homeUrl().'test.jpg&w='.THUMBNAIL_WIDTH;
-        $result2 = TUMBNAIL_SCRIPT . '?src='.$this->normalObj->homeUrl().'test.jpg&w=100';
-        $result3 = TUMBNAIL_SCRIPT . '?src='.$this->normalObj->homeUrl().'test.jpg&w=100&h=100';
+        $result1 = TUMBNAIL_SCRIPT . '?i='.$this->normalObj->homeUrl().'test.jpg&w='.THUMBNAIL_WIDTH;
+        $result2 = TUMBNAIL_SCRIPT . '?i='.$this->normalObj->homeUrl().'test.jpg&w=100';
+        $result3 = TUMBNAIL_SCRIPT . '?i='.$this->normalObj->homeUrl().'test.jpg&w=100&h=100';
         $this->assertEquals($result1,$this->normalObj->thumb('test.jpg'));
         $this->assertEquals($result2,$this->normalObj->thumb('test.jpg', 100));
         $this->assertEquals($result3,$this->normalObj->thumb('test.jpg', 100, 100));
