@@ -3,15 +3,6 @@
 	
 <?php if ( ($btns = $o->extra('buttons')) && count($btns['pages']) > 1):?>
 	<div class="com_navigation">
-	
-	
-		<?php /* if(isset($btns['prev']) && false !== $btns['prev']):?>
-			<a href='<?php echo $o->currentDir() . (($btns['prev']) ? $btns['prev'] : '') ; ?>' id="previous_page">
-				<?php echo $o->translate('prev');?>
-			</a>&nbsp;
-		<?php endif;*/?>
-                <?php include('prevButton.phtml'); ?>
-		
 		<?php for($i=0; !empty($btns['pages']) && count($btns['pages']) > 1 && $i<count($btns['pages']); $i++):?>
 			<?php if(isset($btns['current']) && $btns['pages'][$i]['id'] == $btns['current']): ?>
 			
@@ -28,16 +19,7 @@
 				</a> &nbsp;
 			
 			<?php endif;?>
-		<?php endfor; ?>
-		
-		<?php /* if(isset($btns['next']) && false !== $btns['next']):?>
-			<a href='<?php echo $o->currentDir() . $btns['next']; ?>' id="next_page">
-			
-			<?php echo $o->translate('next');?>
-			
-			</a>&nbsp;
-		<?php endif;*/?>
-                <?php include('nextButton.phtml'); ?>              
+		<?php endfor; ?>        
 	</div>
 <?php endif;?>	
 	

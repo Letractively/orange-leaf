@@ -9,10 +9,13 @@
 
 hr.cleaner{ clear:both; }
 
-.com_wrapper{ width:900px; margin: 0 auto; }
+.com_wrapper{ width:1000px; margin: 0 auto; }
 .com_body{ }
+.com_main_frame{background: #fff;}
+.com_main_frame td:first-child, .com_main_frame tr:last-child{width:49px;}
 
-.com_elements{ margin: 0 auto; }
+
+.com_elements{ margin: 0 auto; width: 100%}
 .com_el { float:left; padding:20px; margin:10px; }
 .com_el ul{ margin: 0; padding: 0; }
 .com_el li{ float:left; list-style: none inside none; margin:5px; }
