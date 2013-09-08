@@ -12,6 +12,7 @@ hr.cleaner{ clear:both; }
 .com_wrapper{ width:1000px; margin: 0 auto; }
 .com_body{ }
 .com_main_frame{background: #fff;}
+.com_main_frame td {width:100%;}
 .com_main_frame td:first-child, .com_main_frame tr:last-child{width:49px;}
 
 
