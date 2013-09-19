@@ -61,22 +61,22 @@ class Link
         
         $res = '';
         $dirs = explode('/', $realPath);    // [domain, comic, language, chapter, filename]
-        if ( !isset($dirs[1]) ) {
+        if ( empty($dirs[1]) ) {
             throw new Error500('Link::href error building link, corrupted Item::realPath');
         } 
         if (!$single_comic) { 
             $res = $dirs[1] . '/';          // comic/
         }
         
-        if ( isset($dirs[2]) ) { 
+        if ( !empty($dirs[2]) ) { 
             $res .= $dirs[2] . '/';         // [comic/]language/
         }
         
-        if ( isset($dirs[3]) ) { 
+        if ( !empty($dirs[3]) ) { 
             $res .= $dirs[3] . '/';         // [comic/]language/chapter/
         }
         
-        if ( isset($dirs[4]) && '' !== $dirs[4]) { 
+        if ( !empty($dirs[4]) && '' !== $dirs[4]) { 
             if ($use_orig) {
                 $res .= $dirs[4] ;         // [comic/]language/chapter/filename
             } else {

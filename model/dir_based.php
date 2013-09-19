@@ -59,29 +59,43 @@ abstract class Node_Model extends MultiLang_Model
     
     /* virtual */ protected function getNeighbors() {
         $parent_dir = getParentDirName($this->getCurrentDir());
-        if (!$parent_dir) {
-            return array();
-        }
         
-        /* find current dir */
-        $items = new DirList('Item',$parent_dir);
-        $dirs = $items->getPageData();
-        $cur_dir_index = null;
-        for ($i = 0; $i < count($dirs); $i++) {
-            if ( $dirs[$i]->realPath === $this->getCurrentDir() ) {
-                $cur_dir_index = $i;
+        $res = array();
+        $current_dir = $this->getCurrentDir();
+        
+        while($parent_dir) {
+            /* find current dir */
+            $items = new DirList('Item',$parent_dir);
+            $dirs = $items->getPageData();
+            $cur_dir_index = null;
+            for ($i = 0; $i < count($dirs); $i++) {
+                if ( $dirs[$i]->realPath === $current_dir ) {
+                    $cur_dir_index = $i;
+                    break;
+                }
+            }
+            if (null === $cur_dir_index) {
+                throw new Error500("Model can't find neighbors.");
+            }
+            
+            if ( !isset($res['previousDir']) && isset($dirs[$cur_dir_index-1]) )
+            {
+                $res['previousDir'] = $dirs[$cur_dir_index-1];
+            }
+            
+            if ( !isset($res['nextDir']) && isset($dirs[$cur_dir_index+1]) )
+            {
+                $res['nextDir'] = $dirs[$cur_dir_index+1];
+            }
+            
+            if ( isset($res['previousDir']) && isset($res['nextDir']) ) {
                 break;
             }
-        }
-        if (null === $cur_dir_index) {
-            throw new Error500("Model can't find neighbors.");
+            $current_dir = $parent_dir;
+            $parent_dir = getParentDirName($parent_dir);
         }
         
-        /* populate array */
-        return array(
-            'previousDir' => ( isset($dirs[$cur_dir_index-1]) ? $dirs[$cur_dir_index-1] : null),
-            'nextDir' => ( isset($dirs[$cur_dir_index+1]) ? $dirs[$cur_dir_index+1] : null )
-        );
+        return $res;
     }
     
     /* virtual */ protected function getAboutImpl($offset) {
