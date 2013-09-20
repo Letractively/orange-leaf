@@ -48,7 +48,7 @@ define('ERROR_500_PAGE',	'tpls/500.html');	//Path to error 500 page
 define('NAV_PAGE_SYMBOL',       '&#9679;');             //Symbol used for page.
 
 /* Libs dir */
-define('APPLICATION_ROOT',      '');                    //Relative path to classes
+define('APPLICATION_ROOT',      'gears/');                    //Relative path to classes
 
 /* Localization */
 function g_dictionary()
