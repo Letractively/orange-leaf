@@ -18,9 +18,9 @@ define('DESCRIPTION_FILE',	'descr.xml');           //Name of xml file with comic
 define('ABOUT_DIR_NAME',	'about');               //Where to look for info about author/comic
 define('COVER_FILE_NAME',	'cover');               //Cover file name without extension
 define('IMAGE_FILE_TYPES',	'jpg, png, gif');       //Available image formats (extensions)
-define('STYLE_FILE_NAME',       'styles.css');
+define('STYLE_FILE_NAME',       'styles.css');          //File for stylesheet
 define('BACKGROUND_FILE_NAME',  'bg');                  //Extension will be taken from IMAGE_FILE_TYPES
-define('FAVICON_FILE_NAME',     'favicon.ico');         
+define('FAVICON_FILE_NAME',     'favicon.ico');         //Favicon path
 
 /* Defaults. */
 define('DEFAULT_LANGUAGE', 	'en');                  //Label of default language
@@ -28,8 +28,8 @@ define('DEFAULT_COVER',		'404.jpg');             //Path to the default cover fil
 define('THUMBNAIL_WIDTH',	'230');                 //The width of thumbnail in pixels
 define('DEFAULT_TITLE',         'Comic Viewer');        //The width of thumbnail in pixels
 define('WORD_NOT_FOUND',        '(?)');                 //This token will be appended to word if it's not found in the dictionary.
-define('VALUE_NOT_FOUND',       '{NotFound}');
-define('PAGE_MAX_WIDTH',        900);
+define('VALUE_NOT_FOUND',       '{NotFound}');          //Value to be displayed, when value not found
+define('PAGE_MAX_WIDTH',        900);                   //Max width of page
 
 /* Paging settings. */
 define('BOOKS_ON_A_PAGE',	6);                     //How many books to display on the main page.
@@ -50,32 +50,3 @@ define('NAV_PAGE_SYMBOL',       '&#9679;');             //Symbol used for page.
 /* Libs dir */
 define('APPLICATION_ROOT',      'gears/');                    //Relative path to classes
 
-/* Localization */
-function g_dictionary()
-{
-	static $g_loc = array(
-		'en' => array(
-			'chapter' => 'Chapter',
-			'prev' => 'Prev',
-			'next' => 'Next',
-                        'home' => 'Home'
-		),
-		'ru' => array(
-			'chapter' => 'Глава',
-			'prev' => 'Взад',
-			'next' => 'Вперед',
-                        'home' => 'Домой'
-		)
-
-	);
-	return $g_loc;
-}
-
-/* Pretend that you didn't see it */
-function g_translate($ln,$str)
-{
-	$lns = g_dictionary();
-	if ( isset($lns[$ln][$str]) ) return $lns[$ln][$str];
-        if (IS_DEBUGGING) $str .= WORD_NOT_FOUND; 
-	return $str;	
-}

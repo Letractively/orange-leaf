@@ -9,6 +9,7 @@
  ***********************************/ 
 
 require_once('cfg.php');
+require_once('localization.php');
 
 /************ INCLUDES *************/
 require_once(APPLICATION_ROOT . 'common.php');
