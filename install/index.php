@@ -4,7 +4,7 @@ define('INSTALL_DEF_CFG_PATH',  '../cfg.default.php');
 define('INSTALL_FILES_DIR',     '../');
 define('INSTALL_SAMPLE_DIR',    'sample');
 
-if (file_exists(INSTALL_CFG_PATH)) die('The script is already installed.');
+if (file_exists(INSTALL_CFG_PATH)) die('The script is already installed. Edit '.INSTALL_CFG_PATH.' manally.');
 session_start();
 
 function getDomain()
@@ -80,7 +80,8 @@ function processForm($req)
     if ($domain) {
         $path = INSTALL_FILES_DIR.$domain; 
         if ($req['sample_data'] 
-                && file_exists(INSTALL_SAMPLE_DIR) 
+                && file_exists(INSTALL_SAMPLE_DIR)
+                && !file_exists($path)
                 && is_dir(INSTALL_SAMPLE_DIR)
                 && rename(INSTALL_SAMPLE_DIR, $path) ) {
                     echo "<p>Sample data has been copied to $path.</p>";
@@ -107,6 +108,9 @@ function processForm($req)
     return $success;
 }
 ?>
+
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -137,6 +141,7 @@ function processForm($req)
                     {
                         processForm($_REQUEST);
                         unset($_SESSION['salt']);
+                        echo '<a href="..">Install finished.</a>';
                     }
                     else
                     {
