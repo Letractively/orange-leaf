@@ -1,5 +1,5 @@
 <?php
-define('INSTALL_CFG_PATH',      '../cfg2.php');
+define('INSTALL_CFG_PATH',      '../cfg.php');
 define('INSTALL_DEF_CFG_PATH',  '../cfg.default.php');
 define('INSTALL_FILES_DIR',     '../');
 define('INSTALL_SAMPLE_DIR',    'sample');
@@ -64,14 +64,13 @@ function parseCfg($path)
 
 function saveCfg($path,$arr)
 {  
-    $out='';
+    $out="<?php\r\n";
     
     foreach($arr as $key=>$el) {
         $val = $el['val'];
         $comment = $el['comment'];
-        $out .= "define('$key',\t\t\t\t'$val')\t\t\t\t//$comment";
+        $out .= "define('$key',\t'$val');\t\t//$comment\r\n";
     }
-    
     return file_put_contents($path, $out);
 }
 
@@ -80,12 +79,12 @@ function processForm($req)
     $domain = getDomain();
     if ($domain) {
         $path = INSTALL_FILES_DIR.$domain; 
-        if ($req['sample_data']) {
-            if (file_exists(INSTALL_SAMPLE_DIR) && is_dir(INSTALL_SAMPLE_DIR)) {
-                if (rename(INSTALL_SAMPLE_DIR, $path)) {
+        if ($req['sample_data'] 
+                && file_exists(INSTALL_SAMPLE_DIR) 
+                && is_dir(INSTALL_SAMPLE_DIR)
+                && rename(INSTALL_SAMPLE_DIR, $path) ) {
                     echo "<p>Sample data has been copied to $path.</p>";
-                }
-            }
+                
         } else if (mkdir($path)) {
             echo "<p>Dir $path has been created.</p>";
         }
@@ -135,9 +134,14 @@ function processForm($req)
             <?php if (isset($_REQUEST['salt'])):?>
                 <?php 
                     if ($_REQUEST['salt'] == $_SESSION['salt'])
+                    {
                         processForm($_REQUEST);
-                    else 
+                        unset($_SESSION['salt']);
+                    }
+                    else
+                    {
                         echo "<p>Error submitting form, turn on cookies.</p>";
+                    }
                     
                 ?>
             <?php else: ?>
