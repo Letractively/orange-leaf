@@ -99,7 +99,13 @@ function processForm($req)
             $cfg[$key]['val'] = addslashes($req[$var]);
         }
     }
-    return saveCfg($cfg,INSTALL_CFG_PATH);
+    echo '<p>Saving</p>';
+    $success = saveCfg(INSTALL_CFG_PATH,$cfg);
+    if (!$success) 
+        echo '<p>Error saving config.</p>';
+    else
+        echo '<p>Done.</p>';
+    return $success;
 }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
