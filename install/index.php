@@ -50,8 +50,13 @@ function parseCfg($path)
     
     foreach ($matches as $m) {
         $key = $m[1];
+        $val = trim($m[2]);
+        if ('true' === $val)
+            $val = true;
+        if ('false' === $val)
+            $val = false;
         $res[ $key ]=array(
-                'val'=>trim($m[2]),
+                'val'=>$val,
                 'comment'=>trim($m[3])
         );
         
