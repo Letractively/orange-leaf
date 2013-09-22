@@ -45,7 +45,7 @@ function parseCfg($path)
     $p_comment  =   "[\t ]*\/\/(.*)";
     
     $pattern    =   '|'.$p_define.$p_name.$p_value.$p_comment.'|u';
-    $mathes = array();
+    $matches = array();
     preg_match_all($pattern,$str,$matches,PREG_SET_ORDER);
     
     foreach ($matches as $m) {
@@ -53,8 +53,11 @@ function parseCfg($path)
         $val = trim($m[2]);
         if ('true' === $val)
             $val = true;
-        if ('false' === $val)
+        else if ('false' === $val)
             $val = false;
+        else if (is_numeric($val))
+            $val = intval($val);
+        
         $res[ $key ]=array(
                 'val'=>$val,
                 'comment'=>trim($m[3])
@@ -74,7 +77,13 @@ function saveCfg($path,$arr)
     foreach($arr as $key=>$el) {
         $val = $el['val'];
         $comment = $el['comment'];
-        $out .= "define('$key',\t'$val');\t\t//$comment\r\n";
+        if (is_string($val))
+            $val = "'$val'";
+        if (false === $val)
+            $val = 'false';
+        if (true === $val)
+            $val = 'true';
+        $out .= "define('$key',\t$val);\t\t//$comment\r\n";
     }
     return file_put_contents($path, $out);
 }
@@ -100,8 +109,16 @@ function processForm($req)
     echo '<p>Got ' . count($cfg) . ' config records.</p>';
     foreach($cfg as $key=>$el) {
         $var = strtolower($key);
+        $val =& $cfg[$key]['val'];
+        if (is_bool($val))
+            $val = false;
         if ( isset($req[$var]) ) {
-            $cfg[$key]['val'] = addslashes($req[$var]);
+            if (is_int($val)) 
+                $val = intval($req[$var]);
+            else if (is_bool($val))
+                $val = !!$req[$var];
+            else 
+                $val = addslashes($req[$var]);
         }
     }
     echo '<p>Saving</p>';
@@ -175,7 +192,11 @@ function processForm($req)
                                 </div>
                             </td>
                             <td clas="value">
-                                <input type="text" name="<?php echo strtolower($key)?>" value="<?php echo $el['val']?>" /> 
+                                <?php if (is_bool($el['val'])):?>
+                                    <input type="checkbox" name="<?php echo strtolower($key)?>" <?php if ($el['val']) echo 'checked="checked"'?> /> 
+                                <?php else: ?>
+                                    <input type="text" name="<?php echo strtolower($key)?>" value="<?php echo $el['val']?>" /> 
+                                <?php endif?>
                             </td>
                         </tr>
                         <?php endforeach;?>
