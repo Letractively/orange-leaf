@@ -6,6 +6,11 @@ class Link
     private $parent_dir = null; // path/to/
             
     function __construct($dir) {
+        if ('' == $dir || '/' == $dir) {
+            $this->cur_dir = '';
+            $this->parent_dir = '';
+            return;
+        }
         $this->cur_dir = dirname($dir.'hook').'/';
         if ('./' == $this->cur_dir) 
             $this->cur_dir = '';
