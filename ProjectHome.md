@@ -1,0 +1,1 @@
+The script outputs comic books directory structure in a convenient way. Easy to use and easy to upload.
